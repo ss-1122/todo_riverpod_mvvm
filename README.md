@@ -1,0 +1,2 @@
+# todo_riverpod_mvvm
+状態管理ライブラリとしてRiverpodを使用し、MVVMアーキテクチャパターンを採用したTODOアプリプロジェクト。
