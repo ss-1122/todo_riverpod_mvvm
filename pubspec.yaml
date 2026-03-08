@@ -37,7 +37,7 @@ dependencies:
   go_router: ^14.0.0
 
   # コード生成（アノテーション）
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
 
   # ローカルDB
@@ -47,8 +47,8 @@ dependencies:
   path: ^1.9.0
 
   # 状態管理（Riverpod）
-  flutter_riverpod: ^2.5.1
-  riverpod_annotation: ^2.3.5
+  flutter_riverpod: ^3.0.0
+  riverpod_annotation: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -58,15 +58,15 @@ dev_dependencies:
 
   # コード生成
   build_runner: ^2.4.13
-  freezed: ^2.5.7
+  freezed: ^3.0.0
   json_serializable: ^6.8.0
   drift_dev: ^2.20.0
-  go_router_builder: ^2.7.2
+  go_router_builder: ^4.0.0
 
   # Riverpod コード生成
-  riverpod_generator: ^2.4.3
-  custom_lint: ^0.7.3
-  riverpod_lint: ^2.3.13
+  riverpod_generator: ^4.0.0
+  custom_lint: ^0.8.0
+  riverpod_lint: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
