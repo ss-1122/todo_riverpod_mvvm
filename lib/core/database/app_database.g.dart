@@ -3,7 +3,7 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
+class $TodosTable extends Todos with TableInfo<$TodosTable, TodoData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -45,7 +45,7 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   String get actualTableName => $name;
   static const String $name = 'todos';
   @override
-  VerificationContext validateIntegrity(Insertable<Todo> instance,
+  VerificationContext validateIntegrity(Insertable<TodoData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -74,9 +74,9 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Todo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  TodoData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Todo(
+    return TodoData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       title: attachedDatabase.typeMapping
@@ -94,12 +94,12 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   }
 }
 
-class Todo extends DataClass implements Insertable<Todo> {
+class TodoData extends DataClass implements Insertable<TodoData> {
   final int id;
   final String title;
   final String? memo;
   final bool isCompleted;
-  const Todo(
+  const TodoData(
       {required this.id,
       required this.title,
       this.memo,
@@ -125,10 +125,10 @@ class Todo extends DataClass implements Insertable<Todo> {
     );
   }
 
-  factory Todo.fromJson(Map<String, dynamic> json,
+  factory TodoData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Todo(
+    return TodoData(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       memo: serializer.fromJson<String?>(json['memo']),
@@ -146,19 +146,19 @@ class Todo extends DataClass implements Insertable<Todo> {
     };
   }
 
-  Todo copyWith(
+  TodoData copyWith(
           {int? id,
           String? title,
           Value<String?> memo = const Value.absent(),
           bool? isCompleted}) =>
-      Todo(
+      TodoData(
         id: id ?? this.id,
         title: title ?? this.title,
         memo: memo.present ? memo.value : this.memo,
         isCompleted: isCompleted ?? this.isCompleted,
       );
-  Todo copyWithCompanion(TodosCompanion data) {
-    return Todo(
+  TodoData copyWithCompanion(TodosCompanion data) {
+    return TodoData(
       id: data.id.present ? data.id.value : this.id,
       title: data.title.present ? data.title.value : this.title,
       memo: data.memo.present ? data.memo.value : this.memo,
@@ -169,7 +169,7 @@ class Todo extends DataClass implements Insertable<Todo> {
 
   @override
   String toString() {
-    return (StringBuffer('Todo(')
+    return (StringBuffer('TodoData(')
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('memo: $memo, ')
@@ -183,14 +183,14 @@ class Todo extends DataClass implements Insertable<Todo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Todo &&
+      (other is TodoData &&
           other.id == this.id &&
           other.title == this.title &&
           other.memo == this.memo &&
           other.isCompleted == this.isCompleted);
 }
 
-class TodosCompanion extends UpdateCompanion<Todo> {
+class TodosCompanion extends UpdateCompanion<TodoData> {
   final Value<int> id;
   final Value<String> title;
   final Value<String?> memo;
@@ -207,7 +207,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     this.memo = const Value.absent(),
     this.isCompleted = const Value.absent(),
   }) : title = Value(title);
-  static Insertable<Todo> custom({
+  static Insertable<TodoData> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? memo,
@@ -356,14 +356,14 @@ class $$TodosTableAnnotationComposer
 class $$TodosTableTableManager extends RootTableManager<
     _$AppDatabase,
     $TodosTable,
-    Todo,
+    TodoData,
     $$TodosTableFilterComposer,
     $$TodosTableOrderingComposer,
     $$TodosTableAnnotationComposer,
     $$TodosTableCreateCompanionBuilder,
     $$TodosTableUpdateCompanionBuilder,
-    (Todo, BaseReferences<_$AppDatabase, $TodosTable, Todo>),
-    Todo,
+    (TodoData, BaseReferences<_$AppDatabase, $TodosTable, TodoData>),
+    TodoData,
     PrefetchHooks Function()> {
   $$TodosTableTableManager(_$AppDatabase db, $TodosTable table)
       : super(TableManagerState(
@@ -409,14 +409,14 @@ class $$TodosTableTableManager extends RootTableManager<
 typedef $$TodosTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
     $TodosTable,
-    Todo,
+    TodoData,
     $$TodosTableFilterComposer,
     $$TodosTableOrderingComposer,
     $$TodosTableAnnotationComposer,
     $$TodosTableCreateCompanionBuilder,
     $$TodosTableUpdateCompanionBuilder,
-    (Todo, BaseReferences<_$AppDatabase, $TodosTable, Todo>),
-    Todo,
+    (TodoData, BaseReferences<_$AppDatabase, $TodosTable, TodoData>),
+    TodoData,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
