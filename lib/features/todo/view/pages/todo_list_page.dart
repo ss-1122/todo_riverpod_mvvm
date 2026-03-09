@@ -39,6 +39,7 @@ class TodoListPage extends ConsumerWidget {
                       child: FilterChip(
                         label: Text(filter.label),
                         selected: currentFilter == filter,
+                        showCheckmark: false,
                         onSelected: (_) => notifier.setFilter(filter),
                       ),
                     ),
