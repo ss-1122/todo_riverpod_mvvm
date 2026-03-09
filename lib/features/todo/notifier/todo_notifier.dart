@@ -1,23 +1,13 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:todo_riverpod_mvvm/core/constants/filter_type.dart';
 import 'package:todo_riverpod_mvvm/features/todo/domain/entity/todo.dart';
 import 'package:todo_riverpod_mvvm/features/todo/usecase/get_todo_by_id_usecase.dart';
 import 'package:todo_riverpod_mvvm/features/todo/usecase/get_todos_usecase.dart';
 import 'package:todo_riverpod_mvvm/features/todo/usecase/update_todo_usecase.dart';
 
 part 'todo_notifier.g.dart';
-
-/// Todoリストのフィルタ状態
-enum FilterType {
-  all('すべて'),
-  incomplete('未完了'),
-  completed('完了');
-
-  const FilterType(this.label);
-
-  final String label;
-}
 
 /// Todoリスト＋フィルタ状態を管理する Notifier
 ///
