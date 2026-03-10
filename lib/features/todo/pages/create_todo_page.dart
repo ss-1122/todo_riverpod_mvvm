@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_riverpod_mvvm/core/constants/app_spacing.dart';
 import 'package:todo_riverpod_mvvm/features/todo/usecase/add_todo_usecase.dart';
 
 /// Todo作成画面
@@ -59,7 +60,7 @@ class _CreateTodoPageState extends ConsumerState<CreateTodoPage> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             // ─── タイトル ───────────────────────────────────────────
             TextFormField(
@@ -74,7 +75,7 @@ class _CreateTodoPageState extends ConsumerState<CreateTodoPage> {
                   : null,
               textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             // ─── メモ ───────────────────────────────────────────────
             TextFormField(
               controller: _memoController,
@@ -86,14 +87,14 @@ class _CreateTodoPageState extends ConsumerState<CreateTodoPage> {
               maxLines: 4,
               textInputAction: TextInputAction.newline,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl2),
             // ─── 保存ボタン ──────────────────────────────────────────
             FilledButton(
               onPressed: _isSaving ? null : _save,
               child: _isSaving
                   ? const SizedBox(
-                      height: 20,
-                      width: 20,
+                      height: AppSpacing.xl,
+                      width: AppSpacing.xl,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Text('保存'),

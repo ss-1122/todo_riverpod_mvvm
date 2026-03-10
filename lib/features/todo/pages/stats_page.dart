@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_riverpod_mvvm/core/constants/app_font_size.dart';
+import 'package:todo_riverpod_mvvm/core/constants/app_spacing.dart';
 import 'package:todo_riverpod_mvvm/features/todo/domain/entity/todo_stats.dart';
 import 'package:todo_riverpod_mvvm/features/todo/notifier/stats_notifier.dart';
 
@@ -32,31 +34,33 @@ class _StatsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppSpacing.xl2),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Todo 統計', style: textTheme.headlineMedium),
-            const SizedBox(height: 32),
+            const Text(
+              'Todo 統計',
+              style: TextStyle(fontSize: AppFontSize.xl2),
+            ),
+            const SizedBox(height: AppSpacing.xl3),
             _StatCard(
               icon: Icons.list_alt,
               label: '総Todo数',
               value: stats.total,
               color: colorScheme.primary,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             _StatCard(
               icon: Icons.check_circle,
               label: '完了',
               value: stats.completed,
               color: Colors.green,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             _StatCard(
               icon: Icons.radio_button_unchecked,
               label: '未完了',
@@ -85,21 +89,26 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.xl2,
+          vertical: AppSpacing.xl,
+        ),
         child: Row(
           children: [
-            Icon(icon, size: 36, color: color),
-            const SizedBox(width: 16),
+            Icon(icon, size: AppFontSize.xl4, color: color),
+            const SizedBox(width: AppSpacing.lg),
             Expanded(
-              child: Text(label, style: textTheme.titleLarge),
+              child: Text(
+                label,
+                style: const TextStyle(fontSize: AppFontSize.xl),
+              ),
             ),
             Text(
               '$value 件',
-              style: textTheme.headlineSmall?.copyWith(
+              style: TextStyle(
+                fontSize: AppFontSize.xl,
                 color: color,
                 fontWeight: FontWeight.bold,
               ),

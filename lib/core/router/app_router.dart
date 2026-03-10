@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_riverpod_mvvm/features/todo/view/pages/create_todo_page.dart';
-import 'package:todo_riverpod_mvvm/features/todo/view/pages/stats_page.dart';
-import 'package:todo_riverpod_mvvm/features/todo/view/pages/todo_detail_page.dart';
-import 'package:todo_riverpod_mvvm/features/todo/view/pages/todo_list_page.dart';
+import 'package:todo_riverpod_mvvm/core/constants/app_font_size.dart';
+import 'package:todo_riverpod_mvvm/features/todo/pages/create_todo_page.dart';
+import 'package:todo_riverpod_mvvm/features/todo/pages/stats_page.dart';
+import 'package:todo_riverpod_mvvm/features/todo/pages/todo_detail_page.dart';
+import 'package:todo_riverpod_mvvm/features/todo/pages/todo_list_page.dart';
 
 part 'app_router.g.dart';
 
@@ -56,6 +57,9 @@ class _ScaffoldWithNavBar extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
+        // 選択中・未選択でフォントサイズが変わらないよう固定する
+        selectedFontSize: AppFontSize.sm,
+        unselectedFontSize: AppFontSize.sm,
         onTap: (index) => navigationShell.goBranch(
           index,
           initialLocation: index == navigationShell.currentIndex,

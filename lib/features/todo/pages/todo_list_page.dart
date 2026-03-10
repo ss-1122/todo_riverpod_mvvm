@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_riverpod_mvvm/core/constants/app_spacing.dart';
 import 'package:todo_riverpod_mvvm/core/constants/filter_type.dart';
 import 'package:todo_riverpod_mvvm/core/router/app_router.dart';
 import 'package:todo_riverpod_mvvm/features/todo/domain/entity/todo.dart';
@@ -19,7 +20,6 @@ class TodoListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncTodos = ref.watch(todoProvider);
-    final notifier = ref.read(todoProvider.notifier);
     final currentFilter = ref.watch(
       todoProvider.notifier.select((n) => n.currentFilter),
     );
@@ -30,17 +30,21 @@ class TodoListPage extends ConsumerWidget {
         children: [
           // ─── フィルタチップ ───────────────────────────────────────
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
             child: Row(
               children: FilterType.values
                   .map(
                     (filter) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsets.only(right: AppSpacing.sm),
                       child: FilterChip(
                         label: Text(filter.label),
                         selected: currentFilter == filter,
                         showCheckmark: false,
-                        onSelected: (_) => notifier.setFilter(filter),
+                        onSelected: (_) =>
+                            ref.read(todoProvider.notifier).setFilter(filter),
                       ),
                     ),
                   )
@@ -58,7 +62,9 @@ class TodoListPage extends ConsumerWidget {
                         final todo = todos[index];
                         return _TodoListItem(
                           todo: todo,
-                          onToggle: () => notifier.toggleCompleted(todo),
+                          onToggle: () => ref
+                              .read(todoProvider.notifier)
+                              .toggleCompleted(todo),
                           onDelete: () => ref
                               .read(deleteTodoUseCaseProvider)
                               .call(id: todo.id),
@@ -105,7 +111,7 @@ class _TodoListItem extends StatelessWidget {
       background: Container(
         alignment: Alignment.centerRight,
         color: Colors.red,
-        padding: const EdgeInsets.only(right: 16),
+        padding: const EdgeInsets.only(right: AppSpacing.lg),
         child: const Icon(Icons.delete, color: Colors.white),
       ),
       onDismissed: (_) => onDelete(),
