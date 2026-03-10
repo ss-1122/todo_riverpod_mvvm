@@ -29,15 +29,15 @@ final class TodoRepositoryProvider
   /// AppDatabase から TodoLocalSource を生成し、
   /// TodoRepositoryImpl にDIして TodoRepository として提供する。
   TodoRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'todoRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'todoRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$todoRepositoryHash();

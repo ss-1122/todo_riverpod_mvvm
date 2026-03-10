@@ -12,18 +12,20 @@ part of 'get_todos_usecase.dart';
 @ProviderFor(getTodosUseCase)
 final getTodosUseCaseProvider = GetTodosUseCaseProvider._();
 
-final class GetTodosUseCaseProvider extends $FunctionalProvider<GetTodosUseCase,
-    GetTodosUseCase, GetTodosUseCase> with $Provider<GetTodosUseCase> {
+final class GetTodosUseCaseProvider
+    extends
+        $FunctionalProvider<GetTodosUseCase, GetTodosUseCase, GetTodosUseCase>
+    with $Provider<GetTodosUseCase> {
   GetTodosUseCaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'getTodosUseCaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getTodosUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$getTodosUseCaseHash();

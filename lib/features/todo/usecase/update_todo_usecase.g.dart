@@ -12,20 +12,24 @@ part of 'update_todo_usecase.dart';
 @ProviderFor(updateTodoUseCase)
 final updateTodoUseCaseProvider = UpdateTodoUseCaseProvider._();
 
-final class UpdateTodoUseCaseProvider extends $FunctionalProvider<
-    UpdateTodoUseCase,
-    UpdateTodoUseCase,
-    UpdateTodoUseCase> with $Provider<UpdateTodoUseCase> {
+final class UpdateTodoUseCaseProvider
+    extends
+        $FunctionalProvider<
+          UpdateTodoUseCase,
+          UpdateTodoUseCase,
+          UpdateTodoUseCase
+        >
+    with $Provider<UpdateTodoUseCase> {
   UpdateTodoUseCaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'updateTodoUseCaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'updateTodoUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$updateTodoUseCaseHash();
@@ -33,8 +37,8 @@ final class UpdateTodoUseCaseProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<UpdateTodoUseCase> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   UpdateTodoUseCase create(Ref ref) {

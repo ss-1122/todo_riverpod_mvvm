@@ -12,20 +12,24 @@ part of 'get_todo_by_id_usecase.dart';
 @ProviderFor(getTodoByIdUseCase)
 final getTodoByIdUseCaseProvider = GetTodoByIdUseCaseProvider._();
 
-final class GetTodoByIdUseCaseProvider extends $FunctionalProvider<
-    GetTodoByIdUseCase,
-    GetTodoByIdUseCase,
-    GetTodoByIdUseCase> with $Provider<GetTodoByIdUseCase> {
+final class GetTodoByIdUseCaseProvider
+    extends
+        $FunctionalProvider<
+          GetTodoByIdUseCase,
+          GetTodoByIdUseCase,
+          GetTodoByIdUseCase
+        >
+    with $Provider<GetTodoByIdUseCase> {
   GetTodoByIdUseCaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'getTodoByIdUseCaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getTodoByIdUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$getTodoByIdUseCaseHash();
@@ -33,8 +37,8 @@ final class GetTodoByIdUseCaseProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<GetTodoByIdUseCase> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   GetTodoByIdUseCase create(Ref ref) {

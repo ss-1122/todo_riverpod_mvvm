@@ -11,6 +11,6 @@ abstract class TodoStats with _$TodoStats {
   const factory TodoStats({
     required int total,
     required int completed,
-    required int incompleted,
+    required int incomplete,
   }) = _TodoStats;
 }

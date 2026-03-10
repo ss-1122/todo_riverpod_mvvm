@@ -12,18 +12,20 @@ part of 'get_stats_usecase.dart';
 @ProviderFor(getStatsUseCase)
 final getStatsUseCaseProvider = GetStatsUseCaseProvider._();
 
-final class GetStatsUseCaseProvider extends $FunctionalProvider<GetStatsUseCase,
-    GetStatsUseCase, GetStatsUseCase> with $Provider<GetStatsUseCase> {
+final class GetStatsUseCaseProvider
+    extends
+        $FunctionalProvider<GetStatsUseCase, GetStatsUseCase, GetStatsUseCase>
+    with $Provider<GetStatsUseCase> {
   GetStatsUseCaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'getStatsUseCaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getStatsUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$getStatsUseCaseHash();

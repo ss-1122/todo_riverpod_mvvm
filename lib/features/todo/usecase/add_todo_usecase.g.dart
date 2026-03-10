@@ -16,15 +16,15 @@ final class AddTodoUseCaseProvider
     extends $FunctionalProvider<AddTodoUseCase, AddTodoUseCase, AddTodoUseCase>
     with $Provider<AddTodoUseCase> {
   AddTodoUseCaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'addTodoUseCaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'addTodoUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$addTodoUseCaseHash();

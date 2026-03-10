@@ -12,20 +12,24 @@ part of 'delete_todo_usecase.dart';
 @ProviderFor(deleteTodoUseCase)
 final deleteTodoUseCaseProvider = DeleteTodoUseCaseProvider._();
 
-final class DeleteTodoUseCaseProvider extends $FunctionalProvider<
-    DeleteTodoUseCase,
-    DeleteTodoUseCase,
-    DeleteTodoUseCase> with $Provider<DeleteTodoUseCase> {
+final class DeleteTodoUseCaseProvider
+    extends
+        $FunctionalProvider<
+          DeleteTodoUseCase,
+          DeleteTodoUseCase,
+          DeleteTodoUseCase
+        >
+    with $Provider<DeleteTodoUseCase> {
   DeleteTodoUseCaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'deleteTodoUseCaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'deleteTodoUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$deleteTodoUseCaseHash();
@@ -33,8 +37,8 @@ final class DeleteTodoUseCaseProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<DeleteTodoUseCase> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   DeleteTodoUseCase create(Ref ref) {

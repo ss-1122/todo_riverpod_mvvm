@@ -11,32 +11,49 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, TodoData> {
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _memoMeta = const VerificationMeta('memo');
   @override
   late final GeneratedColumn<String> memo = GeneratedColumn<String>(
-      'memo', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _isCompletedMeta =
-      const VerificationMeta('isCompleted');
+    'memo',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isCompletedMeta = const VerificationMeta(
+    'isCompleted',
+  );
   @override
   late final GeneratedColumn<bool> isCompleted = GeneratedColumn<bool>(
-      'is_completed', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("is_completed" IN (0, 1))'),
-      defaultValue: const Constant(false));
+    'is_completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_completed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [id, title, memo, isCompleted];
   @override
@@ -45,8 +62,10 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, TodoData> {
   String get actualTableName => $name;
   static const String $name = 'todos';
   @override
-  VerificationContext validateIntegrity(Insertable<TodoData> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<TodoData> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -54,19 +73,26 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, TodoData> {
     }
     if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
     if (data.containsKey('memo')) {
       context.handle(
-          _memoMeta, memo.isAcceptableOrUnknown(data['memo']!, _memoMeta));
+        _memoMeta,
+        memo.isAcceptableOrUnknown(data['memo']!, _memoMeta),
+      );
     }
     if (data.containsKey('is_completed')) {
       context.handle(
+        _isCompletedMeta,
+        isCompleted.isAcceptableOrUnknown(
+          data['is_completed']!,
           _isCompletedMeta,
-          isCompleted.isAcceptableOrUnknown(
-              data['is_completed']!, _isCompletedMeta));
+        ),
+      );
     }
     return context;
   }
@@ -77,14 +103,22 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, TodoData> {
   TodoData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TodoData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      memo: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}memo']),
-      isCompleted: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_completed'])!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      memo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}memo'],
+      ),
+      isCompleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_completed'],
+      )!,
     );
   }
 
@@ -99,11 +133,12 @@ class TodoData extends DataClass implements Insertable<TodoData> {
   final String title;
   final String? memo;
   final bool isCompleted;
-  const TodoData(
-      {required this.id,
-      required this.title,
-      this.memo,
-      required this.isCompleted});
+  const TodoData({
+    required this.id,
+    required this.title,
+    this.memo,
+    required this.isCompleted,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -125,8 +160,10 @@ class TodoData extends DataClass implements Insertable<TodoData> {
     );
   }
 
-  factory TodoData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory TodoData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TodoData(
       id: serializer.fromJson<int>(json['id']),
@@ -146,24 +183,25 @@ class TodoData extends DataClass implements Insertable<TodoData> {
     };
   }
 
-  TodoData copyWith(
-          {int? id,
-          String? title,
-          Value<String?> memo = const Value.absent(),
-          bool? isCompleted}) =>
-      TodoData(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        memo: memo.present ? memo.value : this.memo,
-        isCompleted: isCompleted ?? this.isCompleted,
-      );
+  TodoData copyWith({
+    int? id,
+    String? title,
+    Value<String?> memo = const Value.absent(),
+    bool? isCompleted,
+  }) => TodoData(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    memo: memo.present ? memo.value : this.memo,
+    isCompleted: isCompleted ?? this.isCompleted,
+  );
   TodoData copyWithCompanion(TodosCompanion data) {
     return TodoData(
       id: data.id.present ? data.id.value : this.id,
       title: data.title.present ? data.title.value : this.title,
       memo: data.memo.present ? data.memo.value : this.memo,
-      isCompleted:
-          data.isCompleted.present ? data.isCompleted.value : this.isCompleted,
+      isCompleted: data.isCompleted.present
+          ? data.isCompleted.value
+          : this.isCompleted,
     );
   }
 
@@ -221,11 +259,12 @@ class TodosCompanion extends UpdateCompanion<TodoData> {
     });
   }
 
-  TodosCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? title,
-      Value<String?>? memo,
-      Value<bool>? isCompleted}) {
+  TodosCompanion copyWith({
+    Value<int>? id,
+    Value<String>? title,
+    Value<String?>? memo,
+    Value<bool>? isCompleted,
+  }) {
     return TodosCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -275,18 +314,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [todos];
 }
 
-typedef $$TodosTableCreateCompanionBuilder = TodosCompanion Function({
-  Value<int> id,
-  required String title,
-  Value<String?> memo,
-  Value<bool> isCompleted,
-});
-typedef $$TodosTableUpdateCompanionBuilder = TodosCompanion Function({
-  Value<int> id,
-  Value<String> title,
-  Value<String?> memo,
-  Value<bool> isCompleted,
-});
+typedef $$TodosTableCreateCompanionBuilder =
+    TodosCompanion Function({
+      Value<int> id,
+      required String title,
+      Value<String?> memo,
+      Value<bool> isCompleted,
+    });
+typedef $$TodosTableUpdateCompanionBuilder =
+    TodosCompanion Function({
+      Value<int> id,
+      Value<String> title,
+      Value<String?> memo,
+      Value<bool> isCompleted,
+    });
 
 class $$TodosTableFilterComposer extends Composer<_$AppDatabase, $TodosTable> {
   $$TodosTableFilterComposer({
@@ -297,16 +338,24 @@ class $$TodosTableFilterComposer extends Composer<_$AppDatabase, $TodosTable> {
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get title => $composableBuilder(
-      column: $table.title, builder: (column) => ColumnFilters(column));
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get memo => $composableBuilder(
-      column: $table.memo, builder: (column) => ColumnFilters(column));
+    column: $table.memo,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<bool> get isCompleted => $composableBuilder(
-      column: $table.isCompleted, builder: (column) => ColumnFilters(column));
+    column: $table.isCompleted,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
 class $$TodosTableOrderingComposer
@@ -319,16 +368,24 @@ class $$TodosTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get title => $composableBuilder(
-      column: $table.title, builder: (column) => ColumnOrderings(column));
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get memo => $composableBuilder(
-      column: $table.memo, builder: (column) => ColumnOrderings(column));
+    column: $table.memo,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<bool> get isCompleted => $composableBuilder(
-      column: $table.isCompleted, builder: (column) => ColumnOrderings(column));
+    column: $table.isCompleted,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TodosTableAnnotationComposer
@@ -350,23 +407,29 @@ class $$TodosTableAnnotationComposer
       $composableBuilder(column: $table.memo, builder: (column) => column);
 
   GeneratedColumn<bool> get isCompleted => $composableBuilder(
-      column: $table.isCompleted, builder: (column) => column);
+    column: $table.isCompleted,
+    builder: (column) => column,
+  );
 }
 
-class $$TodosTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $TodosTable,
-    TodoData,
-    $$TodosTableFilterComposer,
-    $$TodosTableOrderingComposer,
-    $$TodosTableAnnotationComposer,
-    $$TodosTableCreateCompanionBuilder,
-    $$TodosTableUpdateCompanionBuilder,
-    (TodoData, BaseReferences<_$AppDatabase, $TodosTable, TodoData>),
-    TodoData,
-    PrefetchHooks Function()> {
+class $$TodosTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TodosTable,
+          TodoData,
+          $$TodosTableFilterComposer,
+          $$TodosTableOrderingComposer,
+          $$TodosTableAnnotationComposer,
+          $$TodosTableCreateCompanionBuilder,
+          $$TodosTableUpdateCompanionBuilder,
+          (TodoData, BaseReferences<_$AppDatabase, $TodosTable, TodoData>),
+          TodoData,
+          PrefetchHooks Function()
+        > {
   $$TodosTableTableManager(_$AppDatabase db, $TodosTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -375,49 +438,52 @@ class $$TodosTableTableManager extends RootTableManager<
               $$TodosTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$TodosTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> title = const Value.absent(),
-            Value<String?> memo = const Value.absent(),
-            Value<bool> isCompleted = const Value.absent(),
-          }) =>
-              TodosCompanion(
-            id: id,
-            title: title,
-            memo: memo,
-            isCompleted: isCompleted,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String title,
-            Value<String?> memo = const Value.absent(),
-            Value<bool> isCompleted = const Value.absent(),
-          }) =>
-              TodosCompanion.insert(
-            id: id,
-            title: title,
-            memo: memo,
-            isCompleted: isCompleted,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String?> memo = const Value.absent(),
+                Value<bool> isCompleted = const Value.absent(),
+              }) => TodosCompanion(
+                id: id,
+                title: title,
+                memo: memo,
+                isCompleted: isCompleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String title,
+                Value<String?> memo = const Value.absent(),
+                Value<bool> isCompleted = const Value.absent(),
+              }) => TodosCompanion.insert(
+                id: id,
+                title: title,
+                memo: memo,
+                isCompleted: isCompleted,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
           prefetchHooksCallback: null,
-        ));
+        ),
+      );
 }
 
-typedef $$TodosTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $TodosTable,
-    TodoData,
-    $$TodosTableFilterComposer,
-    $$TodosTableOrderingComposer,
-    $$TodosTableAnnotationComposer,
-    $$TodosTableCreateCompanionBuilder,
-    $$TodosTableUpdateCompanionBuilder,
-    (TodoData, BaseReferences<_$AppDatabase, $TodosTable, TodoData>),
-    TodoData,
-    PrefetchHooks Function()>;
+typedef $$TodosTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TodosTable,
+      TodoData,
+      $$TodosTableFilterComposer,
+      $$TodosTableOrderingComposer,
+      $$TodosTableAnnotationComposer,
+      $$TodosTableCreateCompanionBuilder,
+      $$TodosTableUpdateCompanionBuilder,
+      (TodoData, BaseReferences<_$AppDatabase, $TodosTable, TodoData>),
+      TodoData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -450,15 +516,15 @@ final class AppDatabaseProvider
   ///
   /// ref.onDispose で DB を適切にクローズする。
   AppDatabaseProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'appDatabaseProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'appDatabaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$appDatabaseHash();

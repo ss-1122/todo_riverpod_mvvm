@@ -42,10 +42,7 @@ class _StatsContent extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Todo 統計',
-              style: TextStyle(fontSize: AppFontSize.xl2),
-            ),
+            const Text('Todo 統計', style: TextStyle(fontSize: AppFontSize.xl2)),
             const SizedBox(height: AppSpacing.xl3),
             _StatCard(
               icon: Icons.list_alt,
@@ -64,7 +61,7 @@ class _StatsContent extends StatelessWidget {
             _StatCard(
               icon: Icons.radio_button_unchecked,
               label: '未完了',
-              value: stats.incompleted,
+              value: stats.incomplete,
               color: Colors.orange,
             ),
           ],

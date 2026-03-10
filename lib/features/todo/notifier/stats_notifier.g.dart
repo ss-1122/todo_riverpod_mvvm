@@ -27,15 +27,15 @@ final class StatsNotifierProvider
   /// 追加の可変フィールドが不要なため StreamNotifier を採用。
   /// build() で GetStatsUseCase が返す Stream をそのまま返す。
   StatsNotifierProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'statsProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'statsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$statsNotifierHash();
@@ -58,11 +58,14 @@ abstract class _$StatsNotifier extends $StreamNotifier<TodoStats> {
   @override
   void runBuild() {
     final ref = this.ref as $Ref<AsyncValue<TodoStats>, TodoStats>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<TodoStats>, TodoStats>,
-        AsyncValue<TodoStats>,
-        Object?,
-        Object?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<TodoStats>, TodoStats>,
+              AsyncValue<TodoStats>,
+              Object?,
+              Object?
+            >;
     element.handleCreate(ref, build);
   }
 }

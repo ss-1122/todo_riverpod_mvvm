@@ -14,12 +14,12 @@ class GetStatsUseCase {
   final TodoRepository _repository;
 
   Stream<TodoStats> call() => _repository.watchAll().map(
-        (todos) => TodoStats(
-          total: todos.length,
-          completed: todos.where((t) => t.isCompleted).length,
-          incompleted: todos.where((t) => !t.isCompleted).length,
-        ),
-      );
+    (todos) => TodoStats(
+      total: todos.length,
+      completed: todos.where((t) => t.isCompleted).length,
+      incomplete: todos.where((t) => !t.isCompleted).length,
+    ),
+  );
 }
 
 @riverpod

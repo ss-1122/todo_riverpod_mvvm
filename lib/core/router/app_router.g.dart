@@ -6,41 +6,36 @@ part of 'app_router.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [
-      $mainShellRouteData,
-    ];
+List<RouteBase> get $appRoutes => [$mainShellRouteData];
 
 RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
-      factory: $MainShellRouteDataExtension._fromState,
-      branches: [
-        StatefulShellBranchData.$branch(
+  factory: $MainShellRouteDataExtension._fromState,
+  branches: [
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/todos',
+          factory: $TodoListRoute._fromState,
           routes: [
             GoRouteData.$route(
-              path: '/todos',
-              factory: $TodoListRoute._fromState,
-              routes: [
-                GoRouteData.$route(
-                  path: 'create',
-                  factory: $CreateTodoRoute._fromState,
-                ),
-                GoRouteData.$route(
-                  path: ':id',
-                  factory: $TodoDetailRoute._fromState,
-                ),
-              ],
+              path: 'create',
+              factory: $CreateTodoRoute._fromState,
             ),
-          ],
-        ),
-        StatefulShellBranchData.$branch(
-          routes: [
             GoRouteData.$route(
-              path: '/stats',
-              factory: $StatsRoute._fromState,
+              path: ':id',
+              factory: $TodoDetailRoute._fromState,
             ),
           ],
         ),
       ],
-    );
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/stats', factory: $StatsRoute._fromState),
+      ],
+    ),
+  ],
+);
 
 extension $MainShellRouteDataExtension on MainShellRouteData {
   static MainShellRouteData _fromState(GoRouterState state) =>
@@ -51,9 +46,7 @@ mixin $TodoListRoute on GoRouteData {
   static TodoListRoute _fromState(GoRouterState state) => const TodoListRoute();
 
   @override
-  String get location => GoRouteData.$location(
-        '/todos',
-      );
+  String get location => GoRouteData.$location('/todos');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -74,9 +67,7 @@ mixin $CreateTodoRoute on GoRouteData {
       const CreateTodoRoute();
 
   @override
-  String get location => GoRouteData.$location(
-        '/todos/create',
-      );
+  String get location => GoRouteData.$location('/todos/create');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -93,16 +84,15 @@ mixin $CreateTodoRoute on GoRouteData {
 }
 
 mixin $TodoDetailRoute on GoRouteData {
-  static TodoDetailRoute _fromState(GoRouterState state) => TodoDetailRoute(
-        id: int.parse(state.pathParameters['id']!),
-      );
+  static TodoDetailRoute _fromState(GoRouterState state) =>
+      TodoDetailRoute(id: int.parse(state.pathParameters['id']!));
 
   TodoDetailRoute get _self => this as TodoDetailRoute;
 
   @override
   String get location => GoRouteData.$location(
-        '/todos/${Uri.encodeComponent(_self.id.toString())}',
-      );
+    '/todos/${Uri.encodeComponent(_self.id.toString())}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -122,9 +112,7 @@ mixin $StatsRoute on GoRouteData {
   static StatsRoute _fromState(GoRouterState state) => const StatsRoute();
 
   @override
-  String get location => GoRouteData.$location(
-        '/stats',
-      );
+  String get location => GoRouteData.$location('/stats');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -154,15 +142,15 @@ final class AppRouterProvider
     extends $FunctionalProvider<GoRouter, GoRouter, GoRouter>
     with $Provider<GoRouter> {
   AppRouterProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'appRouterProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'appRouterProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$appRouterHash();
