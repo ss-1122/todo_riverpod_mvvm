@@ -70,6 +70,7 @@ class TodoListPage extends ConsumerWidget {
                               .call(id: todo.id),
                           onTap: () =>
                               TodoDetailRoute(id: todo.id).push<void>(context),
+                          scaffoldMessenger: ScaffoldMessenger.of(context),
                         );
                       },
                     ),
@@ -96,12 +97,14 @@ class _TodoListItem extends StatelessWidget {
     required this.onToggle,
     required this.onDelete,
     required this.onTap,
+    required this.scaffoldMessenger,
   });
 
   final Todo todo;
   final VoidCallback onToggle;
-  final VoidCallback onDelete;
+  final Future<void> Function() onDelete;
   final VoidCallback onTap;
+  final ScaffoldMessengerState scaffoldMessenger;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +117,17 @@ class _TodoListItem extends StatelessWidget {
         padding: const EdgeInsets.only(right: AppSpacing.lg),
         child: const Icon(Icons.delete, color: Colors.white),
       ),
-      onDismissed: (_) => onDelete(),
+      confirmDismiss: (_) async {
+        try {
+          await onDelete();
+          return true;
+        } catch (e) {
+          scaffoldMessenger.showSnackBar(
+            SnackBar(content: Text('削除に失敗しました: $e')),
+          );
+          return false;
+        }
+      },
       child: ListTile(
         leading: Checkbox(
           value: todo.isCompleted,
@@ -130,11 +143,7 @@ class _TodoListItem extends StatelessWidget {
               : null,
         ),
         subtitle: todo.memo != null && todo.memo!.isNotEmpty
-            ? Text(
-                todo.memo!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )
+            ? Text(todo.memo!, maxLines: 1, overflow: TextOverflow.ellipsis)
             : null,
         trailing: const Icon(Icons.chevron_right),
         onTap: onTap,
