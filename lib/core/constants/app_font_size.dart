@@ -4,8 +4,8 @@
 /// 4px 単位の規則的なスケールを採用する。
 /// ページやウィジェットから直接参照して `TextStyle(fontSize: AppFontSize.md)` のように使用する。
 abstract final class AppFontSize {
-  /// xs: 10.0
-  static const double xs = 10.0;
+  /// xs: 8.0
+  static const double xs = 8.0;
 
   /// sm: 12.0
   static const double sm = 12.0;
