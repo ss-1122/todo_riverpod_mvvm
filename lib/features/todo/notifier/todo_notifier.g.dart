@@ -48,7 +48,7 @@ final class TodoNotifierProvider
   TodoNotifier create() => TodoNotifier();
 }
 
-String _$todoNotifierHash() => r'17fb74279c8dad0e64f57b2ea76f40bc4b2625ca';
+String _$todoNotifierHash() => r'500a4e48af47cb1c077f9a3904915196732472ae';
 
 /// Todoリスト＋フィルタ状態を管理する Notifier
 ///

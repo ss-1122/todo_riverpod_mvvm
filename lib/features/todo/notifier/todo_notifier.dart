@@ -22,15 +22,25 @@ class TodoNotifier extends _$TodoNotifier {
 
   @override
   Future<List<Todo>> build() async {
-    _sub = ref.watch(getTodosUseCaseProvider).call().listen(
-      (todos) {
-        _allTodos = todos;
-        state = AsyncData(_applyFilter(todos));
-      },
-      onError: (Object e, StackTrace st) => state = AsyncError(e, st),
-    );
+    // build() 再実行時に前回の購読が残っていれば先にキャンセルし、
+    // 二重購読・リークを防ぐ。
+    _sub?.cancel();
+    _sub = null;
+
+    // Todo一覧のStreamを取得
+    final stream = ref.watch(getTodosUseCaseProvider).call();
+    // 初回イベントが来るまでは AsyncLoading のまま待機し、
+    // 最初の値を受け取ってから初期データとして返す。
+    final firstTodos = await stream.first;
+    _allTodos = firstTodos;
+    // 2回目以降のイベントは skip(1) したStreamを購読して state を更新する。
+    _sub = stream.skip(1).listen((todos) {
+      _allTodos = todos;
+      state = AsyncData(_applyFilter(todos));
+    }, onError: (Object e, StackTrace st) => state = AsyncError(e, st));
+    // プロバイダ破棄時にも確実にキャンセルする。
     ref.onDispose(() => _sub?.cancel());
-    return [];
+    return _applyFilter(firstTodos);
   }
 
   /// 現在のフィルタ状態を返す
@@ -49,10 +59,10 @@ class TodoNotifier extends _$TodoNotifier {
   }
 
   List<Todo> _applyFilter(List<Todo> todos) => switch (_filter) {
-        FilterType.all => todos,
-        FilterType.completed => todos.where((t) => t.isCompleted).toList(),
-        FilterType.incomplete => todos.where((t) => !t.isCompleted).toList(),
-      };
+    FilterType.all => todos,
+    FilterType.completed => todos.where((t) => t.isCompleted).toList(),
+    FilterType.incomplete => todos.where((t) => !t.isCompleted).toList(),
+  };
 }
 
 // ─── 詳細画面用：IDからTodoを取得するProvider ────────────────────────
