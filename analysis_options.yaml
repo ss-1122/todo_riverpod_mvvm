@@ -10,6 +10,14 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  # コード自動生成ファイルを解析対象から除外する
+  # *.g.dart / *.freezed.dart は build_runner が生成するファイルであり、
+  # riverpod_generator 等が内部API（$プレフィックスのメンバー）を使うため
+  # IDE上でエラー表示が出るが、実際のコンパイルには影響しない。
+  # 除外することでIDEのノイズを排除する。
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
   errors:
     included_file_warning: ignore
 
