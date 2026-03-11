@@ -32,8 +32,9 @@ LazyDatabase _openConnection() {
 
 /// AppDatabase を Riverpod で管理する Provider
 ///
+/// keepAlive: true により、アプリのライフサイクル全体で DB 接続を維持する。
 /// ref.onDispose で DB を適切にクローズする。
-@riverpod
+@Riverpod(keepAlive: true)
 AppDatabase appDatabase(Ref ref) {
   final db = AppDatabase();
   ref.onDispose(db.close);

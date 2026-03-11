@@ -500,6 +500,7 @@ class $AppDatabaseManager {
 // ignore_for_file: type=lint, type=warning
 /// AppDatabase を Riverpod で管理する Provider
 ///
+/// keepAlive: true により、アプリのライフサイクル全体で DB 接続を維持する。
 /// ref.onDispose で DB を適切にクローズする。
 
 @ProviderFor(appDatabase)
@@ -507,6 +508,7 @@ final appDatabaseProvider = AppDatabaseProvider._();
 
 /// AppDatabase を Riverpod で管理する Provider
 ///
+/// keepAlive: true により、アプリのライフサイクル全体で DB 接続を維持する。
 /// ref.onDispose で DB を適切にクローズする。
 
 final class AppDatabaseProvider
@@ -514,6 +516,7 @@ final class AppDatabaseProvider
     with $Provider<AppDatabase> {
   /// AppDatabase を Riverpod で管理する Provider
   ///
+  /// keepAlive: true により、アプリのライフサイクル全体で DB 接続を維持する。
   /// ref.onDispose で DB を適切にクローズする。
   AppDatabaseProvider._()
     : super(
@@ -521,7 +524,7 @@ final class AppDatabaseProvider
         argument: null,
         retry: null,
         name: r'appDatabaseProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -548,4 +551,4 @@ final class AppDatabaseProvider
   }
 }
 
-String _$appDatabaseHash() => r'4db1c5efe1a73afafa926c6e91d12e49a68b1abc';
+String _$appDatabaseHash() => r'59cce38d45eeaba199eddd097d8e149d66f9f3e1';
