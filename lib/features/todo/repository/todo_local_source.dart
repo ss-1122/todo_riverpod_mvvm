@@ -14,17 +14,18 @@ class TodoLocalSource extends DatabaseAccessor<AppDatabase>
   TodoLocalSource(super.db);
 
   /// 全TodoをStream取得（DBの変更をリアルタイム監視）
-  Stream<List<TodoData>> watchAll() => select(todos).watch();
+  /// id の昇順で固定し、返却順を保証する。
+  Stream<List<TodoData>> watchAll() =>
+      (select(todos)..orderBy([(t) => OrderingTerm.asc(t.id)])).watch();
 
   /// 指定IDのTodoを1件取得
   Future<TodoData?> findById(int id) =>
       (select(todos)..where((t) => t.id.equals(id))).getSingleOrNull();
 
   /// 新規Todoを挿入
-  Future<void> insertTodo({required String title, String? memo}) =>
-      into(todos).insert(
-        TodosCompanion.insert(title: title, memo: Value(memo)),
-      );
+  Future<void> insertTodo({required String title, String? memo}) => into(
+    todos,
+  ).insert(TodosCompanion.insert(title: title, memo: Value(memo)));
 
   /// 既存Todoを更新
   Future<void> updateTodo(TodoData todo) =>
