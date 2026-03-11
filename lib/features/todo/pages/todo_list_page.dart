@@ -101,7 +101,7 @@ class _TodoListItem extends StatelessWidget {
   });
 
   final Todo todo;
-  final VoidCallback onToggle;
+  final Future<void> Function() onToggle;
   final Future<void> Function() onDelete;
   final VoidCallback onTap;
   final ScaffoldMessengerState scaffoldMessenger;
@@ -131,7 +131,15 @@ class _TodoListItem extends StatelessWidget {
       child: ListTile(
         leading: Checkbox(
           value: todo.isCompleted,
-          onChanged: (_) => onToggle(),
+          onChanged: (_) async {
+            try {
+              await onToggle();
+            } catch (e) {
+              scaffoldMessenger.showSnackBar(
+                SnackBar(content: Text('更新に失敗しました: $e')),
+              );
+            }
+          },
         ),
         title: Text(
           todo.title,
