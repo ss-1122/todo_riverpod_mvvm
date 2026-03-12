@@ -5,7 +5,7 @@ import 'package:todo_riverpod_mvvm/features/todo/domain/repository/todo_reposito
 
 /// テスト用の手動スタブ Repository
 ///
-/// 内部に List<Todo> を保持し、Stream で変更を通知する。
+/// 内部に `List<Todo>` を保持し、Stream で変更を通知する。
 /// 外部モックライブラリを使わず、flutter_test のみで完結する。
 class FakeTodoRepository implements TodoRepository {
   FakeTodoRepository([List<Todo>? initialTodos])

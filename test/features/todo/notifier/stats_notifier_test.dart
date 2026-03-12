@@ -33,7 +33,7 @@ void main() {
   });
 
   test('初期状態で正しい統計を返す', () async {
-    final sub = container.listen(statsProvider, (_, __) {});
+    final sub = container.listen(statsProvider, (_, _) {});
 
     // StreamNotifier の build() が Stream の最初のイベントを受け取るまで待つ
     await Future<void>.delayed(Duration.zero);
@@ -51,7 +51,7 @@ void main() {
   });
 
   test('Todo追加後に統計が更新される', () async {
-    final sub = container.listen(statsProvider, (_, __) {});
+    final sub = container.listen(statsProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 
@@ -80,7 +80,7 @@ void main() {
       ],
     );
 
-    final sub = emptyContainer.listen(statsProvider, (_, __) {});
+    final sub = emptyContainer.listen(statsProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 

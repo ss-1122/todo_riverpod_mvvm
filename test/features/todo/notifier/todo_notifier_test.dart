@@ -38,7 +38,7 @@ void main() {
 
   test('初期状態でTodoリストを取得できる', () async {
     // provider を listen して build() を起動
-    final sub = container.listen(todoProvider, (_, __) {});
+    final sub = container.listen(todoProvider, (_, _) {});
 
     // build() 内の非同期処理（Stream.first）が完了するのを待つ
     await Future<void>.delayed(Duration.zero);
@@ -52,7 +52,7 @@ void main() {
   });
 
   test('フィルタをcompletedに変更すると完了のみ返す', () async {
-    final sub = container.listen(todoProvider, (_, __) {});
+    final sub = container.listen(todoProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 
@@ -68,7 +68,7 @@ void main() {
   });
 
   test('フィルタをincompleteに変更すると未完了のみ返す', () async {
-    final sub = container.listen(todoProvider, (_, __) {});
+    final sub = container.listen(todoProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 
@@ -84,7 +84,7 @@ void main() {
   });
 
   test('フィルタをallに戻すと全件返す', () async {
-    final sub = container.listen(todoProvider, (_, __) {});
+    final sub = container.listen(todoProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 
@@ -100,7 +100,7 @@ void main() {
   });
 
   test('currentFilter が正しい値を返す', () async {
-    final sub = container.listen(todoProvider, (_, __) {});
+    final sub = container.listen(todoProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 
@@ -114,7 +114,7 @@ void main() {
   });
 
   test('toggleCompleted でTodoの完了状態が反転する', () async {
-    final sub = container.listen(todoProvider, (_, __) {});
+    final sub = container.listen(todoProvider, (_, _) {});
     await Future<void>.delayed(Duration.zero);
     await Future<void>.delayed(Duration.zero);
 
