@@ -85,12 +85,12 @@ void main() {
     await Future<void>.delayed(Duration.zero);
 
     final state = emptyContainer.read(statsProvider);
-    if (state.hasValue) {
-      final stats = state.value!;
-      expect(stats.total, 0);
-      expect(stats.completed, 0);
-      expect(stats.incomplete, 0);
-    }
+    expect(state.hasValue, isTrue);
+
+    final stats = state.value!;
+    expect(stats.total, 0);
+    expect(stats.completed, 0);
+    expect(stats.incomplete, 0);
 
     sub.close();
     emptyContainer.dispose();
