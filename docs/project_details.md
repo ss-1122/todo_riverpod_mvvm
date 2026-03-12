@@ -64,7 +64,6 @@ lib/
 
 ```
 test/
-├── widget_test.dart                             ← スモークテスト（プレースホルダ）
 ├── helpers/
 │   ├── fake_todo_repository.dart               ← FakeTodoRepository（手動スタブ）
 │   └── fake_todo_local_source.dart             ← FakeTodoLocalSource（手動スタブ）
