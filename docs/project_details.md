@@ -62,6 +62,30 @@ lib/
                 └── todo_repository.dart         ← abstract interface
 ```
 
+```
+test/
+├── widget_test.dart                             ← スモークテスト（プレースホルダ）
+├── helpers/
+│   ├── fake_todo_repository.dart               ← FakeTodoRepository（手動スタブ）
+│   └── fake_todo_local_source.dart             ← FakeTodoLocalSource（手動スタブ）
+└── features/
+    └── todo/
+        ├── notifier/                            ← ViewModelレイヤーのユニットテスト
+        │   ├── todo_notifier_test.dart
+        │   └── stats_notifier_test.dart
+        ├── repository/                          ← データ層のユニットテスト
+        │   └── todo_repository_impl_test.dart
+        ├── usecase/                             ← ドメイン層のユニットテスト
+        │   ├── add_todo_usecase_test.dart
+        │   ├── delete_todo_usecase_test.dart
+        │   ├── get_stats_usecase_test.dart
+        │   ├── get_todo_by_id_usecase_test.dart
+        │   ├── get_todos_usecase_test.dart
+        │   └── update_todo_usecase_test.dart
+        └── view/                                ← Viewレイヤーのウィジェットテスト
+            └── create_todo_page_test.dart
+```
+
 ## Architecture Pattern
 
 本プロジェクトは、**Riverpod + MVVM** アーキテクチャで構築されています。
@@ -147,6 +171,68 @@ lib/
 - **Todos テーブル**: `id`, `title`, `memo`, `is_completed` (snake_case → camelCase 変換)
 - **Drift DAO**: `watchAll()` (Stream) + `findById()` (Future)
 - **Repository**: LocalSource経由でDrift操作を抽象化
+
+---
+
+## Testing
+
+### テスト方針
+
+外部モックライブラリ（mockito 等）を使わず、`flutter_test` のみで完結する **手動スタブ方式** を採用している。
+実DBや実ネットワークへの依存を排除し、高速・安定したテストを実現する。
+
+### テストヘルパー
+
+| ファイル                              | 役割                                                                                                           |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `helpers/fake_todo_repository.dart`   | `TodoRepository` インタフェースの手動スタブ。内部に `List<Todo>` を保持し、`StreamController` で変更を通知する |
+| `helpers/fake_todo_local_source.dart` | Drift DAO（`TodoLocalSource`）の手動スタブ。DB接続なしでマッピングロジックを検証するために使用                 |
+
+### テストの種類と対象レイヤー
+
+| ディレクトリ  | 種類               | 対象レイヤー | 内容                                                                                                                           |
+| ------------- | ------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `notifier/`   | ユニットテスト     | ViewModel    | `ProviderContainer` を使い、フィルタ切替・完了トグル・統計集計のロジックを検証。実DBなしで `FakeTodoRepository` を DI Override |
+| `repository/` | ユニットテスト     | データ       | `TodoData`（DB型）⇔ `Todo`（ドメイン型）のマッピング変換が正しいことを検証                                                     |
+| `usecase/`    | ユニットテスト     | ドメイン     | 各UseCaseが `FakeTodoRepository` に対して正しくCRUD操作を行うかを検証                                                          |
+| `view/`       | ウィジェットテスト | View         | `WidgetTester` で画面を描画し、UI表示・バリデーション・ユーザー操作の結果を検証                                                |
+
+### 各テストファイルの内容
+
+#### notifier/
+
+- **`todo_notifier_test.dart`**: 初期Todoリスト取得、フィルタ変更（completed / incomplete）、`toggleCompleted` によるDB更新通知の反映
+- **`stats_notifier_test.dart`**: 初期統計値（total / completed / incomplete）の算出、Todo追加後の統計リアルタイム更新
+
+#### repository/
+
+- **`todo_repository_impl_test.dart`**: `TodoData → Todo`（toDomain）および `Todo → TodoData`（toData）のフィールドマッピング検証。`memo` が null の場合も正しく扱えることを確認
+
+#### usecase/
+
+- **`add_todo_usecase_test.dart`**: タイトルのみ、タイトル＋メモ、複数追加のケースを検証
+- **`delete_todo_usecase_test.dart`**: 指定IDのTodoが削除されることを検証
+- **`update_todo_usecase_test.dart`**: 既存Todoのタイトル・完了状態更新を検証
+- **`get_todos_usecase_test.dart`**: 全Todo取得のStreamが正しく流れることを検証
+- **`get_todo_by_id_usecase_test.dart`**: 存在するID・存在しないIDで `findById` の結果を検証
+- **`get_stats_usecase_test.dart`**: 全件・完了・未完了の件数が正しく算出されることを検証
+
+#### view/
+
+- **`create_todo_page_test.dart`**: `CreateTodoPage` のウィジェットテスト。`ProviderScope` + `MaterialApp` でページをポンプして以下を検証
+  - 表示：AppBarタイトル、入力フィールド、保存ボタンの存在
+  - バリデーション：タイトル未入力・空白のみでエラーメッセージ表示
+  - 保存：タイトルのみ / タイトル＋メモ / メモ空白→null の各パターン
+
+### テスト実行コマンド
+
+```bash
+# 全テストを実行
+flutter test
+
+# 特定ファイルのみ実行
+flutter test test/features/todo/view/create_todo_page_test.dart
+```
 
 ---
 
